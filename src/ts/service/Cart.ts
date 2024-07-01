@@ -16,10 +16,10 @@ export default class Cart {
   }
 
   totalAmountClear(): number {
-    let sum: number = 0;
-    for (const item of this.items) {
-      sum += item.price;
-    }
+    const sum = this.items.reduce((acc: number, item: Buyable) => {
+      acc += item.price;
+      return acc;
+    }, 0);
     return sum;
   }
 
@@ -29,12 +29,7 @@ export default class Cart {
   }
 
   deleteItem(id: number): void {
-    const newItemsList = [];
-    for (const item of this.items) {
-      if (item.id !== id) {
-        newItemsList.push(item);
-      }
-    }
+    const newItemsList = this.items.filter((item) => item.id !== id);
     this.items = newItemsList;
   }
 }
